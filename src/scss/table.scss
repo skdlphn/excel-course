@@ -2,7 +2,7 @@
 @import 'variables';
 
 .excel__table {
-  overflow-x: visible;
+  overflow-x: auto;
   padding-bottom: 2px;
 
   & .row {
