@@ -12,7 +12,6 @@ export class Excel {
       const $componentElement = $.create('div', Component.className);
       const component = new Component($componentElement);
       $componentElement.html(component.toHtml());
-      // $componentElement.innerHTML = component.toHtml();
       $root.append($componentElement);
       return component;
     });
@@ -20,7 +19,6 @@ export class Excel {
   }
 
   render() {
-    // debugger;
     this.$excelElement.append(this.getRoot());
     this.components.forEach(component => component.init());
   }

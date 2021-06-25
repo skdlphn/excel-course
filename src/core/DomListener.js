@@ -15,13 +15,11 @@ export class DomListener {
       if (!this[method]) {
         throw new Error(`Method ${method} is not implemented in ${this.name} Component`);
       }
-      // console.log('', this['onInput'], method );
       this.$root.on(listener, this[method].bind(this));
     });
   }
 
   removeDOMListeners() {
-
   }
 }
 
