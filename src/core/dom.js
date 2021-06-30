@@ -1,5 +1,3 @@
-import { capitalize } from '@core/utils';
-
 class Dom {
   constructor(selector) {
     this.$el = typeof selector === 'string' ?
@@ -20,21 +18,12 @@ class Dom {
     return this;
   }
 
-  on(eventType, context) {
-    this.handleEventContext = context;
-    this.$el.addEventListener(eventType, this);
+  on(eventType, callback) {
+    this.$el.addEventListener(eventType, callback);
   }
 
-  off(eventType) {
-    this.$el.removeEventListener(eventType, this);
-  }
-
-  handleEvent(event) {
-    const method = getMethodName(event.type);
-    if (!this.handleEventContext[method]) {
-      throw new Error(`Method ${method} is not implemented in ${this.name} Component`);
-    }
-    this.handleEventContext[method](event);
+  off(eventType, callback) {
+    this.$el.removeEventListener(eventType, callback);
   }
 
   append(node) {
@@ -62,7 +51,3 @@ $.create = (tagName, classes = '') => {
   }
   return $(el);
 };
-
-function getMethodName(eventName) {
-  return 'on' + capitalize(eventName);
-}

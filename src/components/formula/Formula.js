@@ -17,7 +17,13 @@ export class Formula extends ExcelComponent {
     `;
   }
 
-  onInput(event) {
+  // onInput(event) {
+  //   console.log('', this.$root );
+  //   console.log('Formula on input', event.target.textContent.trim());
+  // }
+  onInput = event => {
+    // eslint-disable-next-line no-invalid-this
+    console.log('', this.$root );
     console.log('Formula on input', event.target.textContent.trim());
   }
 

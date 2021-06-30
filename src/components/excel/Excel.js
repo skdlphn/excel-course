@@ -11,6 +11,10 @@ export class Excel {
     this.components = this.components.map( Component => {
       const $componentElement = $.create('div', Component.className);
       const component = new Component($componentElement);
+      // DEBUG
+      if (component.name) {
+        window['c' + component.name] = component;
+      }
       $componentElement.html(component.toHtml());
       $root.append($componentElement);
       return component;
@@ -21,6 +25,6 @@ export class Excel {
   render() {
     this.$excelElement.append(this.getRoot());
     this.components.forEach(component => component.init());
-    this.components.forEach(component => component.destroy());
+    // this.components.forEach(component => component.destroy());
   }
 }
