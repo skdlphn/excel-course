@@ -3,11 +3,11 @@ const CODES = {
   Z: 90,
 };
 
-// function createCell() {
-//   return `
-//     <div class="cell" contenteditable="true">B1</div>
-//   `
-// }
+function createCell() {
+  return `
+    <div class="cell" contenteditable="true"></div>
+  `;
+}
 
 function toColumn(col) {
   return `
@@ -32,17 +32,21 @@ export function createTable(rowsCount = 15) {
   const colsCount = CODES.Z - CODES.A +1;
   const rows = [];
 
-  const cols = new Array(colsCount)
+  const upperRowCols = new Array(colsCount)
       .fill('')
       .map(toChar)
       .map(toColumn)
       .join('');
 
-  // console.log('', cols);
-  rows.push(createRow(cols));
+  rows.push(createRow(upperRowCols));
+
+  const cols = new Array(colsCount)
+      .fill('')
+      .map(createCell)
+      .join('');
 
   for (let i = 0; i < rowsCount; i++ ) {
-    rows.push(createRow());
+    rows.push(createRow(cols));
   }
   return rows.join('');
 }
