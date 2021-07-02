@@ -6,14 +6,21 @@ const CODES = {
 
 function toColumn(col) {
   return `
-    <div class="column">${col}</div>
+    <div class="column">
+        ${col}
+        <div class="col-resize" data-resize="col"></div>
+    </div>
   `;
 }
 
 function createRow(content, rowNumber = '') {
+  const resizer = rowNumber ? `<div class="row-resize" data-resize="row"></div>` : '';
   return `
     <div class="row">
-      <div class="row-info">${rowNumber}</div>
+      <div class="row-info">
+        ${rowNumber}
+        ${resizer}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `;
@@ -21,6 +28,13 @@ function createRow(content, rowNumber = '') {
 
 function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
+}
+
+function createCell(width) {
+  const style = width ? `style="width: ${width}` : '';
+  return `
+    <div ${style} class="cell" contenteditable="true"></div>
+  `;
 }
 
 export function createTable(rowsCount = 15) {
@@ -44,10 +58,4 @@ export function createTable(rowsCount = 15) {
     rows.push(createRow(cols, i + 1));
   }
   return rows.join('');
-}
-
-function createCell() {
-  return `
-    <div class="cell" contenteditable="true"></div>
-  `;
 }
