@@ -6,7 +6,7 @@ const CODES = {
 
 function toColumn(col) {
   return `
-    <div class="column">
+    <div class="column" data-type="resizeble">
         ${col}
         <div class="col-resize" data-resize="col"></div>
     </div>
@@ -16,12 +16,12 @@ function toColumn(col) {
 function createRow(content, rowNumber = '') {
   const resizer = rowNumber ? `<div class="row-resize" data-resize="row"></div>` : '';
   return `
-    <div class="row">
+    <div class="row" data-type="row">
       <div class="row-info">
         ${rowNumber}
         ${resizer}
       </div>
-      <div class="row-data">${content}</div>
+      <div class="row-data" data-row-number="${rowNumber}">${content}</div>
     </div>
   `;
 }
@@ -30,10 +30,9 @@ function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
 }
 
-function createCell(width) {
-  const style = width ? `style="width: ${width}` : '';
+function createCell(_, index) {
   return `
-    <div ${style} class="cell" contenteditable="true"></div>
+    <div class="cell" contenteditable="true" data-col-number="${index}"></div>
   `;
 }
 
