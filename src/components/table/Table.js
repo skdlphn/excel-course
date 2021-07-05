@@ -20,12 +20,22 @@ export class Table extends ExcelComponent {
 
   onMousedown = event => {
     if (event.target.dataset.resize) {
+      document.onmouseup = () => {
+        document.onmousemove = null;
+      };
+
       const $resizer = $(event.target);
-      const $resizingCol = $resizer.closest('[data-type=resizeble]');
-      const coords = $resizingCol.getCoords();
+      const $resizingLine = $resizer.closest('[data-type=resizeble]');
+      const coords = $resizingLine.getCoords();
 
-      const resizingColNumber = $resizingCol.data.colNumber;
+      if (event.target.dataset.resize === 'row') {
+        document.onmousemove = e => {
+          $resizingLine.$el.style.height = (coords.height + e.pageY - event.pageY) + 'px';
+        };
+        return;
+      }
 
+      const resizingColNumber = $resizingLine.data.colNumber;
       const sheet = document.createElement('style');
 
       document.onmousemove = e => {
@@ -33,10 +43,8 @@ export class Table extends ExcelComponent {
         sheet.innerHTML = `.excel__table .cell[data-col-number="${resizingColNumber}"], 
                             .column[data-col-number="${resizingColNumber}"] {width: ${width}}`;
         document.body.appendChild(sheet);
-      };
-
-      document.onmouseup = () => {
-        document.onmousemove = null;
+        this.$root.findAll(`[data-col="${resizingColNumber}"]`)
+            .forEach(el => el.style.width = width);
       };
     }
   }
