@@ -30,7 +30,7 @@ export class Table extends ExcelComponent {
 
       if (event.target.dataset.resize === 'row') {
         document.onmousemove = e => {
-          $resizingLine.$el.style.height = (coords.height + e.pageY - event.pageY) + 'px';
+          $resizingLine.css({ height: (coords.height + e.pageY - event.pageY) + 'px', backgroundColor: 'red' });
         };
         return;
       }
@@ -43,8 +43,8 @@ export class Table extends ExcelComponent {
         sheet.innerHTML = `.excel__table .cell[data-col-number="${resizingColNumber}"], 
                             .column[data-col-number="${resizingColNumber}"] {width: ${width}}`;
         document.body.appendChild(sheet);
-        this.$root.findAll(`[data-col="${resizingColNumber}"]`)
-            .forEach(el => el.style.width = width);
+        // this.$root.findAll(`[data-col="${resizingColNumber}"]`)
+        //     .forEach(el => el.style.width = width);
       };
     }
   }

@@ -53,6 +53,12 @@ class Dom {
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }
+
+  css(style = {}) {
+    Object.keys(style).forEach(property => {
+      this.$el.style[property] = style[property];
+    });
+  }
 }
 
 // eslint-disable-next-line require-jsdoc
