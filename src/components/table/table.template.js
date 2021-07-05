@@ -4,9 +4,9 @@ const CODES = {
 };
 
 
-function toColumn(col) {
+function toColumn(col, index) {
   return `
-    <div class="column" data-type="resizeble">
+    <div class="column" data-type="resizeble" data-col-number="${index}">
         ${col}
         <div class="col-resize" data-resize="col"></div>
     </div>

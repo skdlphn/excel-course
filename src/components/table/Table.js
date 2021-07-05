@@ -24,20 +24,15 @@ export class Table extends ExcelComponent {
       const $resizingCol = $resizer.closest('[data-type=resizeble]');
       const coords = $resizingCol.getCoords();
 
-      const $rowData = $resizer.closest('[data-row-number]');
-      const resizingColNumber = Array.from($rowData.$el.children).indexOf($resizingCol.$el);
+      const resizingColNumber = $resizingCol.data.colNumber;
 
-      const $upperRow = $resizer.closest('[data-type=row]');
+      const sheet = document.createElement('style');
+
       document.onmousemove = e => {
-        $resizingCol.$el.style.width = (coords.width + e.pageX - event.pageX) + 'px';
-
-        let $tableRow = $upperRow.$el.nextElementSibling;
-        let $tableRowCol;
-        do {
-          $tableRowCol = $tableRow.querySelector(`[data-col-number="${resizingColNumber}"]`);
-          $tableRowCol.style.width = (coords.width + e.pageX - event.pageX) + 'px';
-          $tableRow = $tableRow.nextElementSibling;
-        } while ($tableRow);
+        const width = (coords.width + e.pageX - event.pageX) + 'px';
+        sheet.innerHTML = `.excel__table .cell[data-col-number="${resizingColNumber}"], 
+                            .column[data-col-number="${resizingColNumber}"] {width: ${width}}`;
+        document.body.appendChild(sheet);
       };
 
       document.onmouseup = () => {
