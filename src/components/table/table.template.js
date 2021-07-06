@@ -4,23 +4,36 @@ const CODES = {
 };
 
 
-function toColumn(col) {
+function toColumn(col, index) {
   return `
-    <div class="column">${col}</div>
+    <div class="column" data-type="resizeble" data-col-number="${index}">
+        ${col}
+        <div class="col-resize" data-resize="col"></div>
+    </div>
   `;
 }
 
 function createRow(content, rowNumber = '') {
+  const resizer = rowNumber ? `<div class="row-resize" data-resize="row"></div>` : '';
   return `
-    <div class="row">
-      <div class="row-info">${rowNumber}</div>
-      <div class="row-data">${content}</div>
+    <div class="row" data-type="resizeble" id="excel__table">
+      <div class="row-info">
+        ${rowNumber}
+        ${resizer}
+      </div>
+      <div class="row-data" data-row-number="${rowNumber}">${content}</div>
     </div>
   `;
 }
 
 function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
+}
+
+function createCell(_, index) {
+  return `
+    <div class="cell" contenteditable="true" data-col-number="${index}"></div>
+  `;
 }
 
 export function createTable(rowsCount = 15) {
@@ -44,10 +57,4 @@ export function createTable(rowsCount = 15) {
     rows.push(createRow(cols, i + 1));
   }
   return rows.join('');
-}
-
-function createCell() {
-  return `
-    <div class="cell" contenteditable="true"></div>
-  `;
 }
