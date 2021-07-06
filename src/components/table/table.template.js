@@ -16,7 +16,7 @@ function toColumn(col, index) {
 function createRow(content, rowNumber = '') {
   const resizer = rowNumber ? `<div class="row-resize" data-resize="row"></div>` : '';
   return `
-    <div class="row" data-type="resizeble">
+    <div class="row" data-type="resizeble" id="excel__table">
       <div class="row-info">
         ${rowNumber}
         ${resizer}
