@@ -30,10 +30,19 @@ function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
 }
 
-function createCell(_, index) {
-  return `
-    <div class="cell" contenteditable="true" data-col-number="${index}"></div>
+// function createCell(row, col) {
+//   return `
+//     <div class="cell" contenteditable="true" data-col-number="${col}" data-rowl-number="${row}"></div>
+//   `;
+// }
+function createCell(row) {
+  return function(_, col) {
+    return `
+    <div class="cell" contenteditable="true" 
+    data-col-number="${col}" 
+    data-id="${row}:${col}"></div>
   `;
+  };
 }
 
 export function createTable(rowsCount = 15) {
@@ -48,13 +57,14 @@ export function createTable(rowsCount = 15) {
 
   rows.push(createRow(upperRowCols));
 
-  const cols = new Array(colsCount - 1)
-      .fill('')
-      .map(createCell)
-      .join('');
 
-  for (let i = 0; i < rowsCount; i++ ) {
-    rows.push(createRow(cols, i + 1));
+  for (let row = 0; row < rowsCount; row++ ) {
+    const cols = new Array(colsCount - 1)
+        .fill('')
+        // .map((_, col) => createCell(row, col))
+        .map(createCell(row))
+        .join('');
+    rows.push(createRow(cols, row + 1));
   }
   return rows.join('');
 }
