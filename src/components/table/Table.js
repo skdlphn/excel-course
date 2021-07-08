@@ -1,7 +1,7 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from '@/components/table/table.template';
 import { resizeHandler } from '@/components/table/table.resize';
-import { shouldResize, shouldSelect } from '@/components/table/table.function';
+import { isCell, isCellWithShift, shouldResize } from '@/components/table/table.function';
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom';
 
@@ -30,10 +30,13 @@ export class Table extends ExcelComponent {
   }
 
   onMousedown = event => {
+    const $target = $(event.target);
     if (shouldResize(event)) {
       resizeHandler(this.$root, event);
-    } else if (shouldSelect(event)) {
-      this.selection.select($(event.target));
+    } else if (isCellWithShift(event)) {
+      this.selection.selectGroup($target);
+    } else if (isCell(event)) {
+      this.selection.select($target);
     }
   }
 }
