@@ -38,7 +38,8 @@ function toChar(_, index) {
 function createCell(row) {
   return function(_, col) {
     return `
-    <div class="cell" contenteditable="true" 
+    <div class="cell" contenteditable="true"
+    data-type="cell"
     data-col-number="${col}" 
     data-id="${row}:${col}"></div>
   `;
