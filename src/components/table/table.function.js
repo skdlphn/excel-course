@@ -1,4 +1,5 @@
 import { range } from '@core/utils';
+import { $ } from '@core/dom';
 
 export function shouldResize(event) {
   return event.target.dataset.resize;
@@ -19,4 +20,49 @@ export function matrix($target, $current) {
     colRange.forEach( col => acc.push(`${row}:${col}`));
     return acc;
   }, []);
+}
+
+export function getIdOnKeydown(event) {
+  const $target = $(event.target);
+  const id = $target.id(true);
+  switch (event.keyCode) {
+    case 38:
+      console.log('38 up', event.keyCode );
+      if (id.row > 0) {
+        id.row--;
+      }
+      break;
+    case 40:
+      if (id.row < 14) {
+        id.row++;
+      }
+      break;
+    case 37:
+      if (id.col > 0) {
+        id.col--;
+      }
+      break;
+    case 39:
+      if (id.col < 24) {
+        id.col++;
+      }
+      break;
+    case 13:
+      console.log('13 enter', event.keyCode );
+      if (id.row < 14) {
+        id.row++;
+      }
+      break;
+    case 9:
+      if (id.col < 24) {
+        id.col++;
+      }
+      break;
+    case 8:
+      console.log('8 back', event.keyCode );
+      break;
+    default:
+      break;
+  }
+  return id;
 }

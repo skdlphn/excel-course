@@ -1,7 +1,7 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from '@/components/table/table.template';
 import { resizeHandler } from '@/components/table/table.resize';
-import { isCell, matrix, shouldResize } from '@/components/table/table.function';
+import { getIdOnKeydown, isCell, matrix, shouldResize } from '@/components/table/table.function';
 import { TableSelection } from '@/components/table/TableSelection';
 import { $ } from '@core/dom';
 
@@ -11,7 +11,7 @@ export class Table extends ExcelComponent {
   constructor($root) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown'],
+      listeners: ['mousedown', 'keydown'],
     });
   }
   toHtml() {
@@ -26,7 +26,25 @@ export class Table extends ExcelComponent {
     super.init();
     const cell = this.$root.find('[data-id="0:0"]');
     this.selection.select(cell);
-    console.log('init');
+    // console.log('init');
+  }
+
+  // cellDown(id) {
+  //   // const id = $target.id(true);
+  //   if (id.row > 13) {
+  //     return id;
+  //   }
+  //   return `${++id.row}:${id.col}`;
+  //   const newCurrent = this.$root.find(`[data-id="${++id.row}:${id.col}"]`);
+  //   newCurrent.$el.focus();
+  //   return newCurrent;
+  // }
+
+  onKeydown = event => {
+    const id = getIdOnKeydown(event);
+    const newCurrent = this.$root.find(`[data-id="${id.row}:${id.col}"]`);
+    newCurrent.$el.focus();
+    this.selection.select(newCurrent);
   }
 
   onMousedown = event => {
