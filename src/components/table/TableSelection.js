@@ -6,15 +6,16 @@ export class TableSelection {
     this.current = null;
   }
 
+  // $el instanceof DOM === true
   select($el) {
     this.clear();
-    this.group.push($el);
     $el.focus().addClass(TableSelection.className);
+    this.group.push($el);
     this.current = $el;
   }
 
   clear() {
-    this.group.forEach( $el => $el.removeClass(TableSelection.className));
+    this.group.forEach($el => $el.removeClass(TableSelection.className));
     this.group = [];
   }
 

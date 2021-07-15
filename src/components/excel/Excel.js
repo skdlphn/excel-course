@@ -3,33 +3,40 @@ import { Emitter } from '@core/Emitter';
 
 export class Excel {
   constructor(selector, options) {
-    this.$excelElement = $(selector);
+    this.$el = $(selector);
     this.components = options.components || [];
     this.emitter = new Emitter();
   }
 
   getRoot() {
     const $root = $.create('div', 'excel');
+
     const componentOptions = {
       emitter: this.emitter,
     };
-    this.components = this.components.map( Component => {
-      const $componentElement = $.create('div', Component.className);
-      const component = new Component($componentElement, componentOptions);
-      // DEBUG
+
+    this.components = this.components.map(Component => {
+      const $el = $.create('div', Component.className);
+      const component = new Component($el, componentOptions);
+      // // DEBUG
       // if (component.name) {
-      //   window['c' + component.name] = component;
+      //   window['c' + component.name] = component
       // }
-      $componentElement.html(component.toHtml());
-      $root.append($componentElement);
+      $el.html(component.toHTML());
+      $root.append($el);
       return component;
     });
+
     return $root;
   }
 
   render() {
-    this.$excelElement.append(this.getRoot());
+    this.$el.append(this.getRoot());
+
     this.components.forEach(component => component.init());
-    // this.components.forEach(component => component.destroy());
+  }
+
+  destroy() {
+    this.components.forEach(component => component.destroy());
   }
 }

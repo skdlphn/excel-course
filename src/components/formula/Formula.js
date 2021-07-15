@@ -6,29 +6,35 @@ export class Formula extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Formula',
-      listeners: ['input', 'click'],
+      listeners: ['input', 'keydown'],
       ...options,
     });
   }
 
-  toHtml() {
+  init() {
+    super.init();
+    this.$on('table:change:text', data => {
+      this.$root.find('[data-formula-input]').text(data);
+    });
+  }
+
+  toHTML() {
     return `
       <div class="info">fx</div>
-      <div class="input" contenteditable="true" spellcheck="false"></div>
+      <div class="input" contenteditable spellcheck="false" data-formula-input></div>
     `;
   }
 
-  // onInput(event) {
-  //   console.log('', this.$root );
-  //   console.log('Formula on input', event.target.textContent.trim());
-  // }
-  onInput = event => {
-    // eslint-disable-next-line no-invalid-this
-    // console.log('Formula on input', event.target.textContent.trim());
-    this.emitter.emit('is working', event.target.textContent.trim());
+  onInput(event) {
+    const text = event.target.textContent.trim();
+    this.$emit('formula:input', text);
   }
 
-  onClick() {
-    console.log('click');
+  onKeydown(event) {
+    // debugger;
+    if (event.key === 'Enter' ) {
+      event.preventDefault();
+      this.$emit('formula:enter');
+    }
   }
 }

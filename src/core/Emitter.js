@@ -4,7 +4,8 @@ export class Emitter {
   }
 
   // dispatch, fire, trigger
-  //  notify listeners if they exist
+  // Уведомляем слушателе если они есть
+  // table.emit('table:select', {a: 1})
   emit(event, ...args) {
     if (!Array.isArray(this.listeners[event])) {
       return false;
@@ -15,25 +16,34 @@ export class Emitter {
     return true;
   }
 
-  // on listen
+  // on, listen
+  // Подписываемся на уведомление
+  // Добавляем нового слушателя
+  // formula.subscribe('table:select', () => {})
   subscribe(event, fn) {
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push(fn);
     return () => {
-      this.listeners[event] = this.listeners[event].filter(listener => listener !== fn);
+      this.listeners[event] =
+        this.listeners[event].filter(listener => listener !== fn);
     };
   }
 }
 
-// const emitter = new Emitter();
+// Example
+// const emitter = new Emitter()
 //
-// const unsubscribe = emitter.subscribe('excel', data => console.log('subscribe Data', data ));
+// const unsub = emitter.subscribe('vladilen', data => console.log(data))
+// emitter.emit('1231231', 42)
 //
-// emitter.emit('excel', 55);
+// setTimeout(() => {
+//   emitter.emit('vladilen', 'After 2 seconds')
+// }, 2000)
 //
-// setTimeout( () => emitter.emit('excel', 'After two seconds'), 2000);
+// setTimeout(() => {
+//   unsub()
+// }, 3000)
 //
-// unsubscribe();
-//
-// setTimeout( () => emitter.emit('excel', 'After fore seconds'), 4000);
-
+// setTimeout(() => {
+//   emitter.emit('vladilen', 'After 4 seconds')
+// }, 4000)
