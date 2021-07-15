@@ -1,9 +1,9 @@
 import { capitalize } from '@core/utils';
-import { TableSelection } from '@/components/table/TableSelection';
+// import { TableSelection } from '@/components/table/TableSelection';
 
-export class DomListener extends TableSelection {
+export class DomListener {
   constructor($root, listeners = []) {
-    super();
+    // super();
     if (!$root) {
       throw new Error(`No $root provided for DomListener!`);
     }

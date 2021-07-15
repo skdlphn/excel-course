@@ -23,46 +23,50 @@ export function matrix($target, $current) {
 }
 
 export function getIdOnKeydown(event) {
+  const keys = [
+    'Enter',
+    'Tab',
+    'ArrowDown',
+    'ArrowUp',
+    'ArrowLeft',
+    'ArrowRight',
+  ];
   const $target = $(event.target);
   const id = $target.id(true);
-  switch (event.keyCode) {
-    case 38:
-      console.log('38 up', event.keyCode );
-      if (id.row > 0) {
-        id.row--;
-      }
-      break;
-    case 40:
-      if (id.row < 14) {
-        id.row++;
-      }
-      break;
-    case 37:
-      if (id.col > 0) {
-        id.col--;
-      }
-      break;
-    case 39:
-      if (id.col < 24) {
-        id.col++;
-      }
-      break;
-    case 13:
-      console.log('13 enter', event.keyCode );
-      if (id.row < 14) {
-        id.row++;
-      }
-      break;
-    case 9:
-      if (id.col < 24) {
-        id.col++;
-      }
-      break;
-    case 8:
-      console.log('8 back', event.keyCode );
-      break;
-    default:
-      break;
+  if (keys.includes(event.key) && !event.shiftKey) {
+    event.preventDefault();
+    switch (event.key) {
+      case 'ArrowUp':
+        id.row = id.row > 0 ? --id.row : id.row;
+        break;
+      case 'ArrowDown':
+      case 'Enter':
+        id.row = id.row < 14 ? ++id.row : id.row;
+        break;
+      case 'ArrowLeft':
+        id.col = id.col > 0 ? --id.col : id.col;
+        break;
+      case 'ArrowRight':
+      case 'Tab':
+        id.col = id.col < 24 ? ++id.col : id.col;
+        break;
+      case 13:
+        console.log('13 enter', event.keyCode );
+        if (id.row < 14) {
+          id.row++;
+        }
+        break;
+      case 9:
+        if (id.col < 24) {
+          id.col++;
+        }
+        break;
+      case 8:
+        console.log('8 back', event.keyCode );
+        break;
+      default:
+        break;
+    }
   }
   return id;
 }
