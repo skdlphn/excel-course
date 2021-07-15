@@ -20,5 +20,6 @@ module.exports = {
     'no-trailing-spaces': ['error', { 'skipBlankLines': true }],
     'no-debugger': 'off',
     'no-invalid-this': 'off',
+    'comma-dangle': 'off'
   },
 };

@@ -1,27 +1,46 @@
 const CODES = {
   A: 65,
-  Z: 90,
+  Z: 90
 };
 
+// function toCell(row, col) {
+//   return `
+//     <div class="cell" contenteditable data-col="${col}"></div>
+//   `
+// }
+
+function toCell(row) {
+  return function(_, col) {
+    return `
+      <div 
+        class="cell" 
+        contenteditable 
+        data-col="${ col }"
+        data-type="cell"
+        data-id="${ row }:${ col }"
+      ></div>
+    `;
+  };
+}
 
 function toColumn(col, index) {
   return `
-    <div class="column" data-type="resizeble" data-col-number="${index}">
-        ${col}
-        <div class="col-resize" data-resize="col"></div>
+    <div class="column" data-type="resizable" data-col="${ index }">
+      ${ col }
+      <div class="col-resize" data-resize="col"></div>
     </div>
   `;
 }
 
-function createRow(content, rowNumber = '') {
-  const resizer = rowNumber ? `<div class="row-resize" data-resize="row"></div>` : '';
+function createRow(index, content) {
+  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row" data-type="resizeble" id="excel__table">
+    <div class="row" data-type="resizable">
       <div class="row-info">
-        ${rowNumber}
-        ${resizer}
+        ${ index ? index : '' }
+        ${ resize }
       </div>
-      <div class="row-data" data-row-number="${rowNumber}">${content}</div>
+      <div class="row-data">${ content }</div>
     </div>
   `;
 }
@@ -30,31 +49,27 @@ function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
 }
 
-function createCell(_, index) {
-  return `
-    <div class="cell" contenteditable="true" data-col-number="${index}"></div>
-  `;
-}
-
 export function createTable(rowsCount = 15) {
-  const colsCount = CODES.Z - CODES.A +1;
+  const colsCount = CODES.Z - CODES.A + 1; // Compute cols count
   const rows = [];
 
-  const upperRowCols = new Array(colsCount)
+  const cols = new Array(colsCount)
       .fill('')
       .map(toChar)
       .map(toColumn)
       .join('');
 
-  rows.push(createRow(upperRowCols));
+  rows.push(createRow(null, cols));
 
-  const cols = new Array(colsCount - 1)
-      .fill('')
-      .map(createCell)
-      .join('');
+  for (let row = 0; row < rowsCount; row++) {
+    const cells = new Array(colsCount)
+        .fill('')
+        // .map((_, col) => toCell(row, col))
+        .map(toCell(row))
+        .join('');
 
-  for (let i = 0; i < rowsCount; i++ ) {
-    rows.push(createRow(cols, i + 1));
+    rows.push(createRow(row + 1, cells));
   }
+
   return rows.join('');
 }
