@@ -50,22 +50,6 @@ export function getIdOnKeydown(event) {
       case 'Tab':
         id.col = id.col < 24 ? ++id.col : id.col;
         break;
-      case 13:
-        console.log('13 enter', event.keyCode );
-        if (id.row < 14) {
-          id.row++;
-        }
-        break;
-      case 9:
-        if (id.col < 24) {
-          id.col++;
-        }
-        break;
-      case 8:
-        console.log('8 back', event.keyCode );
-        break;
-      default:
-        break;
     }
   }
   return id;
