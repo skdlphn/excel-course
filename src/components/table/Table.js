@@ -35,7 +35,6 @@ export class Table extends ExcelComponent {
     });
 
     this.$on('formula:enter', () => {
-      // debugger;
       this.selection.current.focus();
     });
   }
@@ -51,7 +50,7 @@ export class Table extends ExcelComponent {
         this.selection.selectGroup($cells);
       } else {
         this.selection.select($target);
-        this.$emit('table:change:text', this.selection.current.$el.textContent);
+        this.$emit('table:change:text', this.selection.current.text());
       }
     }
   }
@@ -73,19 +72,10 @@ export class Table extends ExcelComponent {
       const id = this.selection.current.id(true);
       const $next = this.$root.find(nextSelector(key, id));
       this.selection.select($next);
-    } else {
-      // debugger;
-      // console.log('target', event.target );
-      // console.log('innerHTML', event.target.innerHTML );
-      // console.log('$el.textContent', this.selection.current.$el.textContent );
-      // this.$emit('table:typing', this.selection.current.textContent);
     }
   }
 
   onKeyup(event) {
-    // console.log('target', event.target );
-    // console.log('innerHTML', event.target.innerHTML );
-    // console.log('$el.textContent', this.selection.current.$el.textContent );
-    this.$emit('table:change:text', this.selection.current.$el.textContent);
+    this.$emit('table:change:text', this.selection.current.text());
   }
 }
