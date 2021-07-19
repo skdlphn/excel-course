@@ -1,7 +1,7 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { $ } from '@core/dom';
 import { createTable } from '@/components/table/table.template';
-import { initResize, resizeHandler } from '@/components/table/table.resize';
+import { resizeHandler } from '@/components/table/table.resize';
 import { isCell, matrix, nextSelector, shouldResize } from './table.functions';
 import { TableSelection } from '@/components/table/TableSelection';
 import * as actions from '@/redux/actions';
@@ -18,7 +18,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(20);
+    return createTable(20, this.store.getState());
   }
 
   prepare() {
@@ -32,7 +32,7 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init();
-    initResize(this.$root, this.store.getState());
+    // initResize(this.$root, this.store.getState());
 
     const $cell = this.$root.find('[data-id="0:0"]');
     this.selectCell($cell);
