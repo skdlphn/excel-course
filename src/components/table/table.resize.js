@@ -40,7 +40,8 @@ export function resizeHandler($root, event) {
 
       resolve({
         value,
-        id: type === 'col' ? $parent.data.col : null
+        type,
+        id: type === 'col' ? $parent.data.col : $parent.data.row
       });
 
       $resizer.css({
@@ -51,12 +52,3 @@ export function resizeHandler($root, event) {
     };
   });
 }
-
-// export function initResize($root, state) {
-//   Object.entries(state.colState).forEach(col => setColumnWidth($root, col[0], col[1]));
-// }
-//
-// function setColumnWidth($root, colNumber, width) {
-//   $root.findAll(`[data-col="${colNumber}"]`)
-//       .forEach(col => col.style.width = width + 'px');
-// }

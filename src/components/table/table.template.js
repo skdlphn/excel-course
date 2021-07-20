@@ -4,6 +4,7 @@ const CODES = {
 };
 
 const COL_WIDTH = '120px';
+const ROW_HEIGHT = 0;
 // function toCell(row, col) {
 //   return `
 //     <div class="cell" contenteditable data-col="${col}"></div>
@@ -34,10 +35,15 @@ function toColumn({ col, index, width }) {
   `;
 }
 
-function createRow(index, content) {
+function createRow(index, content, state = {}) {
   const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
+  const height = state.rowState && state.rowState[index] ? state.rowState[index] : ROW_HEIGHT;
   return `
-    <div class="row" data-type="resizable">
+    <div class="row" 
+    data-type="resizable" 
+    data-row="${index}"
+    style="height: ${height}px"
+    >
       <div class="row-info">
         ${ index ? index : '' }
         ${ resize }
@@ -82,7 +88,7 @@ export function createTable(rowsCount = 15, state = {}) {
         .map(toCell(row, state))
         .join('');
 
-    rows.push(createRow(row + 1, cells));
+    rows.push(createRow(row + 1, cells, state));
   }
 
   return rows.join('');
