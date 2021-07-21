@@ -1,4 +1,4 @@
-import { TABLE_RESIZE } from '@/redux/types';
+import { CHANGE_TEXT, TABLE_RESIZE } from '@/redux/types';
 
 // Action creator
 export function tableResize(data) {
@@ -7,3 +7,12 @@ export function tableResize(data) {
     data
   };
 }
+
+export function changeText(data) {
+  return {
+    type: CHANGE_TEXT,
+    data
+  };
+}
+
+

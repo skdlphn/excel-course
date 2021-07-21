@@ -4,24 +4,33 @@ const CODES = {
 };
 
 const COL_WIDTH = '120px';
-const ROW_HEIGHT = 0;
+const ROW_HEIGHT = 24;
 // function toCell(row, col) {
 //   return `
 //     <div class="cell" contenteditable data-col="${col}"></div>
 //   `
 // }
+function getWidth(state = {}, index) {
+  return (state[index] || COL_WIDTH) + 'px';
+}
+
+function getHeight(state, index) {
+  return (state.rowState && state.rowState[index] ? state.rowState[index] : ROW_HEIGHT) + 'px';
+}
 
 function toCell(row, state) {
   return function(_, col) {
+    const id = `${ row }:${ col }`;
+    const text = state.dataState[id] || '';
     return `
       <div 
         class="cell" 
         contenteditable 
         data-col="${ col }"
         data-type="cell"
-        data-id="${ row }:${ col }"
+        data-id="${id}"
         style="width: ${getWidth(state.colState, col)}"
-      ></div>
+      >${text}</div>
     `;
   };
 }
@@ -37,12 +46,12 @@ function toColumn({ col, index, width }) {
 
 function createRow(index, content, state = {}) {
   const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
-  const height = state.rowState && state.rowState[index] ? state.rowState[index] : ROW_HEIGHT;
+  // const height = state.rowState && state.rowState[index] ? state.rowState[index] : ROW_HEIGHT;
   return `
     <div class="row" 
     data-type="resizable" 
     data-row="${index}"
-    style="height: ${height}px"
+    style="height: ${getHeight(state, index)}"
     >
       <div class="row-info">
         ${ index ? index : '' }
@@ -55,10 +64,6 @@ function createRow(index, content, state = {}) {
 
 function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
-}
-
-function getWidth(state = {}, index) {
-  return (state[index] || COL_WIDTH) + 'px';
 }
 
 function withWidthFrom(state) {
