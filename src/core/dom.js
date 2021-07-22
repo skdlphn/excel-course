@@ -79,6 +79,13 @@ class Dom {
         });
   }
 
+  getStyles(styles = {}) {
+    return styles.reduce((result, style) => {
+      result[style] = this.$el.style[style];
+      return result;
+    }, {});
+  }
+
   id(parse) {
     if (parse) {
       const parsed = this.id().split(':');
