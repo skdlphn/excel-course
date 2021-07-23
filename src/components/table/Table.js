@@ -30,7 +30,6 @@ export class Table extends ExcelComponent {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
     const styles = $cell.getStyles(Object.keys(defaultStyles));
-    // console.log('STYLES', styles );
     this.$dispatch(actions.changeStyles(styles));
   }
 
@@ -58,9 +57,6 @@ export class Table extends ExcelComponent {
         ids: this.selection.selectedIds,
       }));
     });
-    // this.$subscribe(state => {
-    //   console.log('TableState', state);
-    // });
   }
 
   async resizeTable(event) {

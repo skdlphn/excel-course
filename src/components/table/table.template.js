@@ -1,4 +1,5 @@
-import { toInlineStyles } from '@core/utils';
+import { storage, toInlineStyles } from '@core/utils';
+import { defaultStyles } from '@/constants';
 
 const CODES = {
   A: 65,
@@ -7,11 +8,7 @@ const CODES = {
 
 const COL_WIDTH = '120px';
 const ROW_HEIGHT = 24;
-// function toCell(row, col) {
-//   return `
-//     <div class="cell" contenteditable data-col="${col}"></div>
-//   `
-// }
+
 function getWidth(state = {}, index) {
   return (state[index] || COL_WIDTH) + 'px';
 }
@@ -24,9 +21,7 @@ function toCell(row, state) {
   return function(_, col) {
     const id = `${ row }:${ col }`;
     const text = state.dataState[id] || '';
-    // const styles = state.stylesState[id];
-    // const styles = state.stylesState[id]?.join(';');
-    const styles = toInlineStyles(state.stylesState[id]);
+    const styles = toInlineStyles(state.stylesState[id] ?? defaultStyles);
     return `
       <div 
         class="cell" 
@@ -94,7 +89,6 @@ export function createTable(rowsCount = 15, state = {}) {
   for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount)
         .fill('')
-        // .map((_, col) => toCell(row, col))
         .map(toCell(row, state))
         .join('');
 

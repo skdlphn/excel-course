@@ -37,8 +37,6 @@ export function resizeHandler($root, event) {
       } else {
         $parent.css({ height: value + 'px' });
       }
-      // console.log('TYPE', type );
-      // console.log('parent.data', $parent.data );
       resolve({
         value,
         type,

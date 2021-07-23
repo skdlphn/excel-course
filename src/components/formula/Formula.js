@@ -23,13 +23,6 @@ export class Formula extends ExcelComponent {
     this.$on('table:select', $next => {
       this.formula.text($next.text());
     });
-    // this.$on('table:init', $next => {
-    //   this.formula.text($next.text());
-    // });
-    // this.$subscribe( state => {
-    //   console.log('FORMULA', state.currentText );
-    //   this.formula.text(state.currentText);
-    // });
   }
 
   toHTML() {
@@ -41,7 +34,6 @@ export class Formula extends ExcelComponent {
 
   storeChanged({ currentText }) {
     this.formula.text(currentText);
-    // console.log('', changes );
   }
 
   onInput(event) {

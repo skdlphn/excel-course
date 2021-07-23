@@ -15,11 +15,6 @@ export function rootReducer(state, action) {
     case APPLY_STYLE: {
       const val = state.stylesState;
       action.data.ids.forEach(id => {
-        // val[id] = toInlineStyles(action.data.value);
-
-        // val[id] = val[id] ? val[id] : [];
-        // val[id].push( toInlineStyles(action.data.value));
-
         val[id] = { ...val[id], ...action.data.value };
       });
       return { ...state, stylesState: val, currentStyles: { ...state.currentStyles, ...action.data.value } };
