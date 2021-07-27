@@ -21,7 +21,7 @@ export class Formula extends ExcelComponent {
     });
 
     this.$on('table:select', $next => {
-      this.formula.text($next.text());
+      this.formula.text($next.data.value);
     });
   }
 

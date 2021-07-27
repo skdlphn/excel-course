@@ -35,6 +35,19 @@ export function camelToDashCase(str) {
 
 export function toInlineStyles(styles = {}) {
   return Object.keys(styles)
-      .map(key => `${camelToDashCase(key)}: ${styles[key]}`)
+      .map(key => `${ camelToDashCase(key) }: ${ styles[key] }`)
       .join(';');
+}
+
+export function debounce(fn, wait) {
+  let timout;
+  return function(...args) {
+    const later = () => {
+      clearTimeout(timout);
+      fn.apply(this, args);
+      // fn(...args);
+    };
+    clearTimeout(timout);
+    timout = setTimeout(later, wait);
+  };
 }

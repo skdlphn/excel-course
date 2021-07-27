@@ -24,7 +24,6 @@ export function changeStyles(data) {
 
 // value, ids
 export function applyStyle(data) {
-  console.log('applyStyle', data );
   return {
     type: APPLY_STYLE,
     data

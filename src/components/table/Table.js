@@ -6,6 +6,7 @@ import { isCell, matrix, nextSelector, shouldResize } from './table.functions';
 import { TableSelection } from '@/components/table/TableSelection';
 import * as actions from '@/redux/actions';
 import { defaultStyles } from '@/constants';
+import { parse } from '@core/parse';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -40,9 +41,11 @@ export class Table extends ExcelComponent {
     const $cell = this.$root.find('[data-id="0:0"]');
     this.selectCell($cell);
 
-    this.$on('formula:input', text => {
-      this.selection.current.text(text);
-      this.updateTextInStore(text);
+    this.$on('formula:input', value => {
+      this.selection.current
+          .attr('data-value', value);
+      this.selection.current.text(parse(value)?.toString());
+      this.updateTextInStore(parse(value));
     });
 
     this.$on('formula:enter', () => {
@@ -50,7 +53,6 @@ export class Table extends ExcelComponent {
     });
 
     this.$on('toolbar:applyStyle', value => {
-      console.log('toolbar:applyStyle', value);
       this.selection.applyStyle(value);
       this.$dispatch(actions.applyStyle({
         value,
