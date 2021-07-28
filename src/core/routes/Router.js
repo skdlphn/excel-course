@@ -12,23 +12,27 @@ export class Router {
     this.routes = routes;
 
     this.changePageHandler = this.changePageHandler.bind(this);
-
+    this.page = null;
     this.init();
   }
 
   init() {
     window.addEventListener('hashchange', this.changePageHandler);
-    this.changePageHandler();
+    this.changePageHandler(); // two routes
   }
 
   changePageHandler() {
-    const path = ActiveRoute.param;
-    this.$placholder.html('');
-    const Page = this.routes[path];
-    const page = new Page();
-    this.$placholder.append(page.getRoot());
+    this.page?.destroy();
+    this.$placholder.clear();
 
-    page.afterRender();
+    const Page = ActiveRoute.path.includes('excel') ?
+    this.routes.excel :
+    this.routes.dashboard;
+
+    this.page = new Page(ActiveRoute.param);
+    this.$placholder.append(this.page.getRoot());
+
+    this.page.afterRender();
   }
 
   destroy() {
