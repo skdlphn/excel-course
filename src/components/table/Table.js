@@ -52,6 +52,14 @@ export class Table extends ExcelComponent {
       this.selection.current.focus();
     });
 
+    this.$on('header:tableOperation', value => {
+      if (value === 'delete') {
+        const stateKey = this.store.getState().stateKey;
+        localStorage.removeItem('excel:' + stateKey);
+      }
+      window.location.href = 'http://localhost:3000';
+    });
+
     this.$on('toolbar:applyStyle', value => {
       this.selection.applyStyle(value);
       this.$dispatch(actions.applyStyle({

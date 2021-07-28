@@ -17,6 +17,6 @@ const normalize = state => ({
   currentText: '',
 });
 
-export function normalizeInitialState(state) {
-  return state ? normalize(state) : clone(defaultState);
+export function normalizeInitialState(state, key) {
+  return state ? normalize(state) : { ...clone(defaultState), stateKey: key };
 }
