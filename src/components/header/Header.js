@@ -40,7 +40,7 @@ export class Header extends ExcelComponent {
   data-type="button"
   data-value='${JSON.stringify(button.value)}'
   `;
-    return `<div class="button">
+    return `<div class="button" ${meta}>
         <i 
             class="material-icons"
             ${meta}

@@ -9,6 +9,7 @@ const defaultState = {
   currentText: '',
   currentStyles: defaultStyles,
   title: defaultTitle,
+  lastOpen: null,
 };
 
 const normalize = state => ({
@@ -17,6 +18,6 @@ const normalize = state => ({
   currentText: '',
 });
 
-export function normalizeInitialState(state, key) {
-  return state ? normalize(state) : { ...clone(defaultState), stateKey: key };
+export function normalizeInitialState(state) {
+  return state ? normalize(state) : clone(defaultState);
 }

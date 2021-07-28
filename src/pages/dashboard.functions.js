@@ -1,19 +1,21 @@
+import { storage } from '@core/utils';
+
 function toHtml(key) {
-  const tableProps = JSON.parse(getTableProps(key));
-  const dateObj = new Date(parseInt(key.slice(6)));
+  const model = storage(key);
+  const id = key.split(':')[1];
+  const lastOpen = storage(key).lastOpen;
+  const dateObj = new Date(parseInt(lastOpen));
   const month = dateObj.getUTCMonth() + 1;
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
+  const hours = dateObj.getUTCHours();
+  const minutes = dateObj.getUTCMinutes();
   return `
         <li class="db__record">
-          <a href="#">${ tableProps.title }</a>
-          <strong>${ day } ${ month } ${ year }</strong>
+          <a href="#excel/${id}">${ model.title }</a>
+          <strong>${ day }.${ month }.${ year } ${ hours }:${ minutes }</strong>
         </li>
     `;
-}
-
-function getTableProps(key) {
-  return localStorage[key];
 }
 
 // excel:123123

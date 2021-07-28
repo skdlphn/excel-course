@@ -17,7 +17,7 @@ export class ExcelPage extends Page {
   getRoot() {
     const params = this.params ?? Date.now().toString();
     const state = storage(storageName(params));
-    const store = createStore(rootReducer, normalizeInitialState(state, params));
+    const store = createStore(rootReducer, { ...normalizeInitialState(state), lastOpen: Date.now() });
     const stateListener = debounce(state => {
       storage(storageName(params), state);
     }, 300);
