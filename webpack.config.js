@@ -4,11 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
-  console.log('', argv.mode );
-  const isProd = argv.mode === 'production';
+  console.log('ARGV.mode', argv.mode );
+  // const isProd = argv.mode === 'production';
+  const isProd = process.env.NODE_ENV === 'production';
   const isDev = !isProd;
+  console.log('process.env.NODE_ENV', process.env );
   console.log('isProd', isProd);
   console.log('isDev', isDev);
   const filename = ext => isProd ? `[name].[contenthash].bundle.${ext}` : `[name].bundle.${ext}`;
@@ -30,6 +33,10 @@ module.exports = (env, argv) => {
         filename: filename('css'),
       }),
       new CleanWebpackPlugin(),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.PWD': JSON.stringify(process.env.PWD),
+      }),
     ];
 
     if (isDev) {
@@ -53,6 +60,7 @@ module.exports = (env, argv) => {
       alias: {
         '@': path.resolve(__dirname, 'src'),
         '@core': path.resolve(__dirname, 'src', 'core'),
+        'process': 'process/browser',
       },
     },
     devServer: {

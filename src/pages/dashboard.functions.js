@@ -13,7 +13,8 @@ function toHtml(key) {
   return `
         <li class="db__record">
           <a href="#excel/${id}">${ model.title }</a>
-          <strong>${ day }.${ month }.${ year } ${ hours }:${ minutes }</strong>
+          // <strong>${ day }.${ month }.${ year } ${ hours }:${ minutes }</strong>
+          <strong>${ dateObj.toLocaleDateString() } ${ dateObj.toLocaleTimeString() }</strong>
         </li>
     `;
 }

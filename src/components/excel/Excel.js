@@ -1,6 +1,8 @@
 import { $ } from '@core/dom';
 import { Emitter } from '@core/Emitter';
 import { StoreSubscriber } from '@core/StoreSubscriber';
+// import process from 'process';
+
 
 export class Excel {
   constructor(options) {
@@ -34,6 +36,8 @@ export class Excel {
   }
 
   init() {
+    console.log('process.env.PWD: ', process.env.PWD );
+
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach(component => component.init());
   }
