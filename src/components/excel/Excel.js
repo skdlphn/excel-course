@@ -1,10 +1,11 @@
 import { $ } from '@core/dom';
 import { Emitter } from '@core/Emitter';
 import { StoreSubscriber } from '@core/StoreSubscriber';
+// import process from 'process';
+
 
 export class Excel {
-  constructor(selector, options) {
-    this.$el = $(selector);
+  constructor(options) {
     this.components = options.components || [];
     this.store = options.store;
     this.emitter = new Emitter();
@@ -34,8 +35,8 @@ export class Excel {
     return $root;
   }
 
-  render() {
-    this.$el.append(this.getRoot());
+  init() {
+    console.log('process.env.PWD: ', process.env.PWD );
 
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach(component => component.init());

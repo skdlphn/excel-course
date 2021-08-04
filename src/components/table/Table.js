@@ -7,6 +7,7 @@ import { TableSelection } from '@/components/table/TableSelection';
 import * as actions from '@/redux/actions';
 import { defaultStyles } from '@/constants';
 import { parse } from '@core/parse';
+import { ActiveRoute } from '@core/routes/ActiveRoute';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -50,6 +51,18 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:enter', () => {
       this.selection.current.focus();
+    });
+
+    this.$on('header:tableOperation', value => {
+      if (value === 'delete') {
+        const decision = confirm('Assert removing');
+        if (decision) {
+          localStorage.removeItem('excel:' + ActiveRoute.param);
+          ActiveRoute.navigate('');
+        }
+      }
+      ActiveRoute.navigate('');
+      // window.location.href = 'http://localhost:3000';
     });
 
     this.$on('toolbar:applyStyle', value => {
