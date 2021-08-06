@@ -4,6 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
+    "test": "jest --env=jsdom",
+    "test:watch": "jest --watch",
     "start": "NODE_ENV=development webpack serve --mode=development --stats-error-details --stats-children",
     "build": "webpack --mode=production"
   },
@@ -35,6 +37,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-webpack-plugin": "^2.5.4",
     "html-webpack-plugin": "^5.3.1",
+    "jest": "^27.0.6",
     "mini-css-extract-plugin": "^1.6.0",
     "process": "0.11.10",
     "sass": "^1.35.0",
@@ -45,6 +48,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "eslint-plugin-jest": "^24.4.0",
     "normalize.css": "^8.0.1"
   }
 }
